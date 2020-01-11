@@ -1,0 +1,232 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C++ Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 19.0.5.281 Build 20190815
+
+Compiler options: -lpapi -std=c++11 -ansi-alias -Wl,-rpath=/usr/local/share/intel/lib/intel64_lin/ -O2 -Wall -xavx -qopenmp -qopt-report=5 -DN=1000 -DDT=0.001f -DSTEPS=1000 -c
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: particles_simulate(t_particles &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (particles_simulate(t_particles &)) [1/3=33.3%] nbody.cpp(10,1)
+  -> EXTERN: (29,17) calculate_gravitation_velocity(const t_particle *, const t_particle *, t_velocity *)
+  -> EXTERN: (30,17) calculate_collision_velocity(const t_particle *, const t_particle *, t_velocity *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at nbody.cpp(18,9)
+   remark #25420: Collapsed with loop at line 20 
+   remark #25408: memset generated
+   remark #15398: loop was not vectorized: loop was transformed to memset or memcpy
+
+   LOOP BEGIN at nbody.cpp(20,13)
+      remark #25421: Loop eliminated in Collapsing 
+
+   LOOP END
+LOOP END
+
+LOOP BEGIN at nbody.cpp(34,9)
+   remark #25427: Loop Statements Reordered
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(38,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(38,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <velocities.z[i]>, stride is 3   [ nbody.cpp(38,27) ]
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(37,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(37,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <velocities.y[i]>, stride is 3   [ nbody.cpp(37,27) ]
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(36,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(36,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <velocities.x[i]>, stride is 3   [ nbody.cpp(36,27) ]
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(42,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(42,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(42,27) ]
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(41,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(41,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(41,27) ]
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(40,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(40,13) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <p[i]>, stride is 7   [ nbody.cpp(40,27) ]
+   remark #15305: vectorization support: vector length 2
+   remark #15452: unmasked strided loads: 12 
+   remark #15453: unmasked strided stores: 6 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 44 
+   remark #15477: vector cost: 61.500 
+   remark #15478: estimated potential speedup: 0.710 
+   remark #15488: --- end vector cost summary ---
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 3
+LOOP END
+
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at nbody.cpp(15,5)
+   remark #15543: loop was not vectorized: loop with function call not considered an optimization candidate.
+
+   LOOP BEGIN at nbody.cpp(25,9)
+      remark #15543: loop was not vectorized: loop with function call not considered an optimization candidate.
+
+      LOOP BEGIN at nbody.cpp(27,13)
+         remark #15543: loop was not vectorized: loop with function call not considered an optimization candidate.
+      LOOP END
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+nbody.cpp(18,9):remark #34026: call to memset implemented as a call to optimized library version
+nbody.cpp(10,1):remark #34051: REGISTER ALLOCATION : [_Z18particles_simulateRA1000_10t_particle] nbody.cpp:10
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   27[ rax rdx rcx rbx rbp rsi rdi r8-r10 r12-r15 zmm0-zmm12]
+        
+    Routine temporaries
+        Total         :      45
+            Global    :      23
+            Local     :      22
+        Regenerable   :       7
+        Spilled       :      10
+        
+    Routine stack
+        Variables     :   12000 bytes*
+            Reads     :       3 [3.00e+06 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :      32 bytes*
+            Reads     :       5 [2.00e+09 ~ 13.3%]
+            Writes    :       4 [3.00e+06 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: particles_read(FILE *, t_particles &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (particles_read(FILE *, t_particles &)) [2/3=66.7%] nbody.cpp(49,1)
+  -> EXTERN: (52,9) fscanf(FILE *, const char *, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at nbody.cpp(50,5)
+   remark #15527: loop was not vectorized: function call to fscanf(FILE *, const char *, ...) cannot be vectorized   [ nbody.cpp(52,9) ]
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+nbody.cpp(49,1):remark #34051: REGISTER ALLOCATION : [_Z14particles_readP8_IO_FILERA1000_10t_particle] nbody.cpp:49
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   12[ rax rdx rcx rsi rdi r8-r14]
+        
+    Routine temporaries
+        Total         :      25
+            Global    :      10
+            Local     :      15
+        Regenerable   :       3
+        Spilled       :       3
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: particles_write(FILE *, t_particles &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (particles_write(FILE *, t_particles &)) [3/3=100.0%] nbody.cpp(60,1)
+  -> EXTERN: (63,9) fprintf(FILE *, const char *, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at nbody.cpp(61,5)
+   remark #15382: vectorization support: call to function fprintf(FILE *, const char *, ...) cannot be vectorized   [ nbody.cpp(63,9) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed FLOW dependence between call:fprintf(FILE *, const char *, ...) (63:9) and p[i] (63:9)
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+nbody.cpp(60,1):remark #34051: REGISTER ALLOCATION : [_Z15particles_writeP8_IO_FILERA1000_10t_particle] nbody.cpp:60
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   15[ rax rdx rsi rdi r12-r15 zmm0-zmm6]
+        
+    Routine temporaries
+        Total         :      30
+            Global    :      11
+            Local     :      19
+        Regenerable   :       3
+        Spilled       :       4
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
